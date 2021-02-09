@@ -41,6 +41,6 @@ steps:
 - task: CreateWorkItem@1
   condition: failed() # this job will only run if Foo fails
   inputs:
-    workItemType: 'Bug'
-    title: 'WI_bug'
+    workItemType: 'Issue'
+    title: 'WI_Issue'
     associate: true
