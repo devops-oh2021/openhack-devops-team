@@ -16,7 +16,7 @@ namespace UnitTests
         [Fact]
         public void IntentionalFailure()
         {
-            Assert.IsTrue(false);
+            Assert.Equal("Healthy", "Not Healty");
         }
     }
 }
