@@ -6,11 +6,10 @@
 trigger:
   branches:
     include:
-    - main
     - azure-pipelines
   paths:
     include:
-    - apis/poi/*
+    - apis/poi
 
 pool:
   vmImage: 'windows-latest'
