@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'cd0be442-4aa4-46e2-80a5-5c1f26f126f8'
-  imageRepository: 'devopsohapiuserjava'
+  imageRepository: 'devopsoh/api-user-java'
   containerRegistry: 'openhackzae18ij6acr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/apis/user-java/Dockerfile'
   tag: '$(Build.BuildId)'
