@@ -10,6 +10,11 @@ trigger:
   paths:
     include:
     - apis/poi
+    
+pr:
+  branches:
+    exclude:
+    - '*'
 
 pool:
   vmImage: 'ubuntu-latest'
