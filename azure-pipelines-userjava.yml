@@ -9,6 +9,11 @@ trigger:
   paths:
     include:
     - apis/user-java
+    
+pr:
+  branches:
+    exclude:
+    - '*'
 
 resources:
 - repo: self
