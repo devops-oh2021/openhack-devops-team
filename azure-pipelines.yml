@@ -29,7 +29,6 @@ steps:
     Dockerfile: 'apis/poi/web/Dockerfile'
     tags: |
       $(Build.BuildId)
-      latest
 
 - task: CreateWorkItem@1
   condition: failed() # this job will only run if Foo fails
