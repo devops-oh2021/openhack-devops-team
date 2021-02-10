@@ -24,6 +24,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   imageName: 'devopsoh/api-poi'
+  containerRegistry: 'openhackzae18ij6acr.azurecr.io'
 
 steps:
 - task: Docker@2
@@ -41,3 +42,13 @@ steps:
     workItemType: 'Issue'
     title: 'WI_Issue'
     associate: true
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
+    appType: 'webAppContainer'
+    WebAppName: 'openhackzae18ij6poi'
+    DockerNamespace: '$(containerRegistry)'
+    DockerRepository: '$(imageName)'
+    DockerImageTag: '$(Build.BuildId)'
