@@ -5,7 +5,7 @@
 trigger:
   branches:
     include:
-    - azure-pipelines
+    - main
   paths:
     include:
     - apis/userprofile
