@@ -21,18 +21,15 @@ variables:
   imageName: 'devopsoh/api-poi'
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
- 
 - task: Docker@2
   inputs:
     containerRegistry: 'ACR'
     repository: '$(imageName)'
-    command: 'build'
+    command: 'buildAndPush'
     Dockerfile: 'apis/poi/web/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
 
 - task: CreateWorkItem@1
   condition: failed() # this job will only run if Foo fails
