@@ -13,5 +13,10 @@ namespace UnitTests
             Assert.Equal("Healthy", new Healthcheck().Status);
 
         }
+        //[Fact]
+        //public void IntentionalFailure()
+        //{
+        //    Assert.Equal("Healthy", "Not Healty");
+        //}
     }
 }
