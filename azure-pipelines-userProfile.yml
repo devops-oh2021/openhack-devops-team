@@ -9,6 +9,11 @@ trigger:
   paths:
     include:
     - apis/userprofile
+    
+pr:
+  branches:
+    exclude:
+    - '*'
 
 resources:
 - repo: self
