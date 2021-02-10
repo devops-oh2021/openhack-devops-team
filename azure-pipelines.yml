@@ -18,6 +18,7 @@ variables:
   solution: 'apis/poi/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  imageName: 'devopsoh/api-poi'
 
 steps:
 - task: NuGetToolInstaller@1
