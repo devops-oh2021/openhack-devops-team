@@ -91,7 +91,7 @@ stages:
         filePath: 'health-check.ps1'
         arguments: > # Use this to avoid newline characters in multiline string
           -uri "https://openhackzae18ij6userjava.azurewebsites.net/api/healthcheck/user-java"
-          -displayUri true 
+          -displayUri $True 
 
 - stage: SwapSlot
   displayName: SwapSlot
