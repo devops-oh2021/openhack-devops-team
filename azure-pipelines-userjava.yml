@@ -41,19 +41,71 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        command: buildAndPush
+        command: build
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: push
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+
+- stage: Deploy
+  displayName: Deploy
+  jobs :
+  - job : Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
         appType: 'webAppContainer'
         WebAppName: 'openhackzae18ij6userjava'
+        deployToSlotOrASE: true
+        ResourceGroupName: 'openhackzae18ij6rg'
+        SlotName: 'staging'
         DockerNamespace: '$(containerRegistry)'
         DockerRepository: '$(imageRepository)'
         DockerImageTag: '$(tag)'
 
+- stage: TestStaging
+  displayName: TestStaging
+  jobs :
+  - job : TestScript
+    displayName: TestScript
+    pool:
+      vmImage: $(vmImageName)
+    steps: 
+    - task: PowerShell@2
+      inputs:
+        filePath: 'health-check-ps1'
+        arguments: > # Use this to avoid newline characters in multiline string
+          -uri "https://openhackzae18ij6userjava.azurewebsites.net/api/healthcheck/user-java"
+          -displayUri "true" 
+
+- stage: SwapSlot
+  displayName: SwapSlot
+  condition: eq(variables['output.StatusCode'], '200')
+  jobs :
+  - job : SwapSlot
+    displayName: SwapSlot
+    pool :
+      vmImage: $(vmImageName)
+    steps:
+      - task: AzureAppServiceManage@0
+        inputs:
+          azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
+          Action: 'Swap Slots'
+          WebAppName: 'openhackzae18ij6userjava'
+          ResourceGroupName: 'openhackzae18ij6rg'
+          SourceSlot: 'staging'
