@@ -154,6 +154,11 @@ stages:
           instructions: 'Please approve'
           emailRecipients: 'hacker1hq3@OTAPRD1501ops.onmicrosoft.com'
 
+  - job : FullSwap
+    displayName: FullSwap
+    pool :
+      vmImage: $(vmImageName)
+    steps:
       - task: AzureCLI@2
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
