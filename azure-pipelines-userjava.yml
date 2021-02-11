@@ -81,19 +81,19 @@ stages:
         DockerRepository: '$(imageRepository)'
         DockerImageTag: '$(tag)'
 
-- stage: TestStaging
-  displayName: TestStaging
+# - stage: TestStaging
+#   displayName: TestStaging
+#   jobs :
+  
+
+- stage: SwapSlot
+  displayName: SwapSlot
   jobs :
   - job : TestScript
     displayName: TestScript
     pool:
       vmImage: $(vmImageName)
     steps: 
-
-    # - task: PowerShell@2
-    #   inputs:
-    #     filePath: 'health-check.ps1'
-    #     arguments: > # Use this to avoid newline characters in multiline string
     - task: Bash@3
       displayName: HealthCheck
       name: HealthCheck
@@ -101,19 +101,9 @@ stages:
         filePath: 'health-check3.sh'
         arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
 
-# - stage: TestStatusCode
-#   displayName:  TestStatusCode
-#   jobs:
-#   - job: TestStatusCode
-#     displayName: 
-
-- stage: SwapSlot
-  displayName: SwapSlot
-  # condition: eq($(status), 200)
-  jobs :
   - job : SwapSlot
     variables:
-      statusCode: $[ stageDependencies.TestStaging.TestScript.outputs['HealthCheck.status'] ]
+      statusCode: $[ stageDependencies.SwapSlot.TestScript.outputs['HealthCheck.status'] ]
     displayName: SwapSlot
     pool :
       vmImage: $(vmImageName)
