@@ -84,7 +84,7 @@ stages:
   - job : TestScript
     displayName: TestScript
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'windows-latest'
     steps: 
 
     # - task: PowerShell@2
