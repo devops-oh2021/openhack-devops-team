@@ -29,6 +29,8 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+  healthCheckStatusCode: 0
+
 stages:
 - stage: Build
   displayName: Build and push stage
@@ -84,7 +86,7 @@ stages:
   - job : TestScript
     displayName: TestScript
     pool:
-      vmImage: 'windows-latest'
+      vmImage: $(vmImageName)
     steps: 
 
     # - task: PowerShell@2
@@ -93,7 +95,7 @@ stages:
     #     arguments: > # Use this to avoid newline characters in multiline string
     - task: Bash@3
       inputs:
-        filePath: 'health-check2.sh'
+        filePath: 'health-check3.sh'
         arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
 
 
