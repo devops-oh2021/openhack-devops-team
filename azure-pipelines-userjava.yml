@@ -140,7 +140,7 @@ stages:
       - task: AzureCLI@2
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
-          scriptType: 'ps'
+          scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az webapp traffic-routing set --distribution staging=10 --name openhackzae18ij6userjava --resource-group openhackzae18ij6rg'
 
