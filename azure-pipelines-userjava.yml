@@ -114,7 +114,6 @@ stages:
           targetType: 'inline'
           script: |
             echo '$(status)'
-            echo '$(statusCode)'
 
       - task: AzureAppServiceManage@0
         condition: eq('$(status)', '200')
