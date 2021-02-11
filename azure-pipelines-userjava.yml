@@ -103,7 +103,7 @@ stages:
 
   - job : SwapSlot
     variables:
-      statusCode: $[ stageDependencies.SwapSlot.TestScript.outputs['HealthCheck.status'] ]
+      statusCode: $[ dependencies.SwapSlot.outputs['setvarStep.status'] ]
     displayName: SwapSlot
     pool :
       vmImage: $(vmImageName)
