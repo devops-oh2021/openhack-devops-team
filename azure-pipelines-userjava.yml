@@ -41,6 +41,11 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: AzureKeyVault@1
+      inputs:
+        azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
+        KeyVaultName: 'openhackzae18ij6kv'
+
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
