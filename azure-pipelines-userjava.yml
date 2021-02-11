@@ -149,10 +149,10 @@ stages:
     # pool :
     #   vmImage: $(vmImageName)
     steps:
-      - task: ManualIntervention@8
-        inputs:
-          instructions: 'Please approve'
-          emailRecipients: 'hacker1hq3@OTAPRD1501ops.onmicrosoft.com'
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: 'hacker1hq3@OTAPRD1501ops.onmicrosoft.com'
+        instructions: 'Please Approve'
 
   - job : FullSwap
     displayName: FullSwap
