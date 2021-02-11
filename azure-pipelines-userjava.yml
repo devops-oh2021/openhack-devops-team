@@ -101,11 +101,11 @@ stages:
         filePath: 'health-check3.sh'
         arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
 
-- stage: TestStatusCode
-  displayName:  TestStatusCode
-  jobs:
-  - job: TestStatusCode
-    displayName: 
+# - stage: TestStatusCode
+#   displayName:  TestStatusCode
+#   jobs:
+#   - job: TestStatusCode
+#     displayName: 
 
 - stage: SwapSlot
   displayName: SwapSlot
@@ -118,8 +118,11 @@ stages:
     pool :
       vmImage: $(vmImageName)
     steps:
+      - task: Bash@3
+        inputs:
+          script: echo '$(statusCode)'
       - task: AzureAppServiceManage@0
-        condition: eq($(statusCode), 200)
+        condition: eq('$(statusCode)', '200')
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
           Action: 'Swap Slots'
