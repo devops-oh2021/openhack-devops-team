@@ -61,5 +61,8 @@ if [[ -z $hasUrl ]]; then
 else
     echo "$timestamp | $status | $endpoint " 
 fi 
+
+echo "##vso[task.setvariable variable=status]$status"
+
 sleep $duration
 
