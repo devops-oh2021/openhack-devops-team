@@ -89,25 +89,26 @@ stages:
 - stage: SwapSlot
   displayName: SwapSlot
   jobs :
-  - job : TestScript
-    displayName: TestScript
-    pool:
-      vmImage: $(vmImageName)
-    steps: 
-    - task: Bash@3
-      displayName: HealthCheck
-      name: HealthCheck
-      inputs:
-        filePath: 'health-check3.sh'
-        arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
+  # - job : TestScript
+  #   displayName: TestScript
+  #   pool:
+  #     vmImage: $(vmImageName)
+  #   steps: 
+    
 
   - job : SwapSlot
-    variables:
-      statusCode: $[ dependencies.SwapSlot.outputs['HealthCheck.status'] ]
+    # variables:
+    #   statusCode: $[ dependencies.SwapSlot.outputs['HealthCheck.status'] ]
     displayName: SwapSlot
     pool :
       vmImage: $(vmImageName)
     steps:
+      - task: Bash@3
+        displayName: HealthCheck
+        name: HealthCheck
+        inputs:
+          filePath: 'health-check3.sh'
+          arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
       - task: Bash@3
         inputs:
           targetType: 'inline'
@@ -116,7 +117,7 @@ stages:
             echo '$(statusCode)'
 
       - task: AzureAppServiceManage@0
-        condition: eq('$(statusCode)', '200')
+        condition: eq('$(status)', '200')
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
           Action: 'Swap Slots'
