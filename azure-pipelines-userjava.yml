@@ -109,7 +109,7 @@ stages:
 
 - stage: SwapSlot
   displayName: SwapSlot
-  # condition: eq('$(status)', '200')
+  # condition: eq($(status), 200)
   jobs :
   - job : SwapSlot
     variables:
@@ -119,7 +119,7 @@ stages:
       vmImage: $(vmImageName)
     steps:
       - task: AzureAppServiceManage@0
-        condition: eq('$(statusCode)', '200')
+        condition: eq($(statusCode), 200)
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
           Action: 'Swap Slots'
