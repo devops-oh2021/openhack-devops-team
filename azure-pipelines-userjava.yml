@@ -29,7 +29,8 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-  healthCheckStatusCode: 0
+  # Health Check StatusCode
+  status: 0
 
 stages:
 - stage: Build
@@ -101,7 +102,7 @@ stages:
 
 - stage: SwapSlot
   displayName: SwapSlot
-  condition: eq(variables['output.StatusCode'], '200')
+  condition: eq(variables['status'], '200')
   jobs :
   - job : SwapSlot
     displayName: SwapSlot
