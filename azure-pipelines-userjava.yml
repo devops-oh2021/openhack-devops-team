@@ -144,6 +144,11 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScript: 'az webapp traffic-routing set --distribution staging=10 --name openhackzae18ij6userjava --resource-group openhackzae18ij6rg'
 
+  - job : Approval
+    displayName: Approval?
+    pool :
+      vmImage: $(vmImageName)
+    steps:
       - task: ManualIntervention@8
         inputs:
           instructions: 'Please approve'
