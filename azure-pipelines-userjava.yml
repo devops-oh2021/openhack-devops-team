@@ -94,7 +94,7 @@ stages:
     - task: Bash@3
       inputs:
         filePath: 'health-check2.sh'
-        arguments: '-i "https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java"'
+        arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
 
 
 - stage: SwapSlot
