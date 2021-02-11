@@ -58,10 +58,10 @@ fi
 timestamp=$(date "+%Y%m%d-%H%M%S")
 if [[ -z $hasUrl ]]; then
     echo "$timestamp | $status "
-    echo "##vso[task.setvariable variable=status]$status"
+    echo "##vso[task.setvariable variable=status;isOutput=true]$status"
 else
     echo "$timestamp | $status | $endpoint " 
-    echo "##vso[task.setvariable variable=status]$status"
+    echo "##vso[task.setvariable variable=status;isOutput=true]$status"
 fi 
 
 
