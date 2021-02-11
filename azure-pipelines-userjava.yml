@@ -102,7 +102,7 @@ stages:
 
 - stage: SwapSlot
   displayName: SwapSlot
-  condition: "'200' in variables['status']"
+  condition: eq('${{ variables.status }}', '200')
   jobs :
   - job : SwapSlot
     displayName: SwapSlot
