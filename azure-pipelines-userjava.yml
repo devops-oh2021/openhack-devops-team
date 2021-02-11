@@ -95,21 +95,31 @@ stages:
     #     filePath: 'health-check.ps1'
     #     arguments: > # Use this to avoid newline characters in multiline string
     - task: Bash@3
+      displayName: HealthCheck
+      name: HealthCheck
       inputs:
         filePath: 'health-check3.sh'
         arguments: '-i https://openhackzae18ij6userjava-staging.azurewebsites.net/api/healthcheck/user-java'
 
+- stage: TestStatusCode
+  displayName:  TestStatusCode
+  jobs:
+  - job: TestStatusCode
+    displayName: 
 
 - stage: SwapSlot
   displayName: SwapSlot
-  condition: eq('$(status)', '200')
+  # condition: eq('$(status)', '200')
   jobs :
   - job : SwapSlot
+    variables:
+      statusCode: $[ stageDependencies.TestStaging.TestScript.outputs['HealthCheck.status'] ]
     displayName: SwapSlot
     pool :
       vmImage: $(vmImageName)
     steps:
       - task: AzureAppServiceManage@0
+        condition: eq('$(statusCode)', '200')
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
           Action: 'Swap Slots'
