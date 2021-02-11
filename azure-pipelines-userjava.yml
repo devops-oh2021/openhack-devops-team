@@ -68,6 +68,14 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: AzureAppServiceManage@0
+      inputs:
+        azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
+        Action: 'Start Azure App Service'
+        WebAppName: 'openhackzae18ij6userjava'
+        SpecifySlotOrASE: true
+        ResourceGroupName: 'openhackzae18ij6rg'
+        Slot: 'staging'
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
@@ -116,10 +124,18 @@ stages:
             echo '$(status)'
 
       - task: AzureAppServiceManage@0
-        condition: eq('$(status)', '200')
+        # condition: eq('$(status)', '200')
         inputs:
           azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
           Action: 'Swap Slots'
           WebAppName: 'openhackzae18ij6userjava'
           ResourceGroupName: 'openhackzae18ij6rg'
           SourceSlot: 'staging'
+      - task: AzureAppServiceManage@0
+        inputs:
+          azureSubscription: 'OTA-PRD-1501(ee108ebd-d737-4d5b-9085-f07b05b621b7)'
+          Action: 'Stop Azure App Service'
+          WebAppName: 'openhackzae18ij6userjava'
+          SpecifySlotOrASE: true
+          ResourceGroupName: 'openhackzae18ij6rg'
+          Slot: 'staging'
